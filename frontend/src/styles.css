@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: #14213d;
+    background-color: #fca311;
+    text-align: center;
+}
+
+h1 {
+    margin: 20px;
+}
+
+form{
+    display: flex;
+    justify-content: center;
+}
+
+.add-todo-input{
+    padding: 10px;
+    margin: 10px;
+    width: 40%;
+    max-width: 450px;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.add-todo-button{
+    height: 30px;
+    margin: auto 0px;
+    padding: 0px 20px;
+    border-radius: 10px;
+    border: none;
+}
+
+.todo-text{
+    flex: 1 0 auto;
+}
+
+.remove-todo-button{
+    align-self: flex-end;
+    padding: 0 10px;
+    color: red;
+    font-weight: bold;
+}
+
+.card {
+    display: flex;
+    background-color: #e5e5e5;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 10px;
+    width: 50%;
+    max-width: 500px;
+}
+.card>input[type="checkbox"]{
+    margin-right: 10px;
+}
