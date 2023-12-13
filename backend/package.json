@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "mocha",
+    "e2e": "cypress open"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "node": "^21.2.0",
+    "nodemon": "^3.0.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "cypress": "^13.6.1",
+    "mocha": "^10.2.0"
+  }
+}

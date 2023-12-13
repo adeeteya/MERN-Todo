@@ -9,36 +9,41 @@ function App() {
   const [todoList, setTodoList] = useState([]);
 
   useEffect(()=>{
-    let todoItems=localStorage.getItem('todoList');
-    console.log(todoItems);
-    if(todoItems!=null){
-      setTodoList(JSON.parse(todoItems));
+    async function getTodos(){
+      const response=await fetch("http://localhost:3000/todos/");
+      const jsonResponse=await response.json();
+      setTodoList(jsonResponse);
     }
-  },[]);
+    getTodos();
+  },[todoList]);
 
-  function onTodoToggle(index) {
-    let newTodoList=todoList;
-    for(let i=0;i<newTodoList.length;i++){
-      if(i==index){
-        newTodoList[i]['isCompleted']=!newTodoList[i]['isCompleted'];
-        console.log(newTodoList[i]);
-      }
+  async function onTodoToggle(todoItem) {
+    const response=await fetch(`http://localhost:3000/todos/${todoItem._id}`,{method:"PATCH",headers: { 'Content-Type': 'application/json' },body:JSON.stringify({ 'name': todoItem.name, 'isCompleted':!todoItem.isCompleted })});
+    if(response.ok){
+      setTodoList([]);
     }
-    setTodoList(newTodoList);
-    localStorage.setItem('todoList',JSON.stringify(newTodoList));
+    else{
+      alert("Error Occurred Please Try Again!");
+    }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setTodoList([...todoList, { 'name': todoInputText, 'isCompleted': false }]);
-    localStorage.setItem('todoList',JSON.stringify([...todoList, { 'name': todoInputText, 'isCompleted': false }]));
-    setTodoInputText('');
+    const response=await fetch(`http://localhost:3000/todos/`,{method:"POST",headers: { 'Content-Type': 'application/json' },body:JSON.stringify({ 'name': todoInputText, 'isCompleted': false })});
+    if(response.ok){
+      setTodoList([]);
+      setTodoInputText('');
+    }
+    else{
+      alert("Error Occurred Please Try Again!");
+    }
   }
 
-  function removeTodo(index){
-    let newTodoList=todoList.filter((todoItem,i)=>i!=index);
-    setTodoList(newTodoList);
-    localStorage.setItem('todoList',JSON.stringify(newTodoList));
+  async function removeTodo(_id){
+    const response=await fetch(`http://localhost:3000/todos/${_id}`,{method:"DELETE"});
+    if(response.ok){
+      setTodoList([]);
+    }
   }
 
   return (
@@ -49,8 +54,8 @@ function App() {
         <button type="submit" className='add-todo-button' >Add</button>
       </form>
       {todoList.length==0 &&"No Todos Added"}
-      {todoList.map((todoItem, index) => {
-            return (<TodoCard key={`${index} ${todoItem.name}`} todoItem={todoItem} onTodoToggle={() => onTodoToggle(index)} removeTodo={()=>removeTodo(index)} />);
+      {todoList.map((todoItem) => {
+            return (<TodoCard key={todoItem._id} todoItem={todoItem} onTodoToggle={() => onTodoToggle(todoItem)} removeTodo={()=>removeTodo(todoItem._id)} />);
           })}
     </>
   )

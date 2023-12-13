@@ -1,0 +1,33 @@
+GET http://localhost:3000/
+
+###
+
+GET http://localhost:3000/todos/
+
+###
+
+GET http://localhost:3000/todos/65798deaf28939a23648f5fe
+
+###
+
+POST http://localhost:3000/todos/
+Content-Type: application/json
+
+{
+    "name":"Sample Test Todo",
+    "isCompleted":false
+}
+
+###
+
+PATCH http://localhost:3000/todos/65798deaf28939a23648f5fe
+Content-Type: application/json
+
+{
+    "name":"Sample Test Todo Updated",
+    "isCompleted":true
+}
+
+###
+
+DELETE http://localhost:3000/todos/65799015af77eacd09e32550
